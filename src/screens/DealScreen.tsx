@@ -3,6 +3,7 @@ import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Deal, DealItem } from '../lib/types'
 import ImageCarousel from '../components/DealImageCarousel';
+import MehButton from '../components/MehButton';
 
 type RouteParams = {
   deal: Deal
@@ -58,9 +59,12 @@ export default class extends Component<Props, State> {
               {deal.title}
             </Text>
             <View style={[styles.item, styles.detailsContainer]}>
-              <Text style={[styles.price, { color: accentColor }]}>
-                {this._getPrice()}
-              </Text>
+              <View style={styles.priceContainer}>
+                <Text style={[styles.price, { color: accentColor }]}>
+                  {this._getPrice()}
+                </Text>
+              </View>
+              <MehButton theme={deal.theme} />
             </View>
           </View>
         </SafeAreaView>
@@ -92,9 +96,13 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: '500'
   },
+  priceContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
   price: {
-    fontSize: 20,
-    flexGrow: 1
+    fontSize: 20
   },
   detailsContainer: {
     display: 'flex',
