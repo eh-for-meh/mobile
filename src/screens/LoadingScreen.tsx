@@ -37,6 +37,7 @@ export default class extends Component<Props, State> {
         useNativeDriver: false
       }).start(() => {
         const { navigation } = this.props;
+        this.setState({ foreground });
         navigation.navigate('deal', { deal });
       });
     } catch (err) {
