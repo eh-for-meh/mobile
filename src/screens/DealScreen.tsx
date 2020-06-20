@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Deal } from '../lib/types'
+import ImageCarousel from '../components/DealImageCarousel';
 
 type RouteParams = {
   deal: Deal
@@ -34,6 +35,7 @@ export default class extends Component<Props, State> {
       <StatusBar barStyle={barStyle} />
       <View style={[styles.container, { backgroundColor }]}>
         <SafeAreaView>
+          <ImageCarousel photos={deal.photos} theme={deal.theme} />
           <Text
             numberOfLines={2}
             adjustsFontSizeToFit={true}
