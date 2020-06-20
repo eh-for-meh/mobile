@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, View, Image } from 'react-native';
+import { ActivityIndicator, Dimensions, StyleSheet, View, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DealTheme } from '../lib/types';
 
@@ -10,6 +10,7 @@ interface Props {
 
 interface State {
   index: number;
+  loaded: boolean[];
 }
 
 const imageWidth = Dimensions.get('window').width;
@@ -19,7 +20,8 @@ export default class extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      index: 0
+      index: 0,
+      loaded: new Array(props.photos.length).map(() => false)
     }
   }
 
@@ -30,7 +32,7 @@ export default class extends Component<Props, State> {
 
   render(): JSX.Element {
     const { photos, theme } = this.props;
-    const { index } = this.state;
+    const { index, loaded } = this.state;
 
     return <View>
       <ScrollView
@@ -47,10 +49,29 @@ export default class extends Component<Props, State> {
             style={styles.imageContainer}
           >
             <Image
+              height={loaded[i] ? undefined : 0}
               style={styles.image}
               resizeMode="contain"
               source={{ uri: photo }}
+              onLoadStart={() => {
+                loaded[i] = false;
+                this.setState({ loaded });
+              }}
+              onLoadEnd={() => {
+                if (loaded[i]) {
+                  return;
+                }
+                loaded[i] = true;
+                this.setState({ loaded });
+              }}
             />
+            {!loaded[i] &&
+              <ActivityIndicator
+                animating
+                color={theme.accentColor}
+                style={styles.image}
+              />
+            }
           </View>;
         })}
       </ScrollView>
