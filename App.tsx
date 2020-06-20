@@ -12,7 +12,8 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoadingScreen from "./src/screens/LoadingScreen";
+import DealScreen from './src/screens/DealScreen';
+import LoadingScreen from './src/screens/LoadingScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default () => {
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
         <Stack.Screen name="loading" component={LoadingScreen}></Stack.Screen>
+        <Stack.Screen name="deal" component={DealScreen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { Animated, StatusBar, StyleSheet } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
 import * as DealsAPI from '../api/deals';
+
+interface Props extends StackScreenProps<any> { }
 
 interface State {
   foreground: 'light' | 'dark';
   backgroundColor: string;
 }
 
-export default class extends Component<any, State> {
+export default class extends Component<Props, State> {
   colorAnimatedValue: Animated.Value;
 
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.colorAnimatedValue = new Animated.Value(0);
     this.state = {
@@ -33,8 +36,8 @@ export default class extends Component<any, State> {
         duration: 1000,
         useNativeDriver: false
       }).start(() => {
-        this.setState({ foreground });
-        // TODO: Navigate to deal screen
+        const { navigation } = this.props;
+        navigation.navigate('deal', { deal });
       });
     } catch (err) {
       // TODO: Handle error
