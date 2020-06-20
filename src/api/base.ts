@@ -1,8 +1,9 @@
 // @ts-ignore
 import {API_ENDPOINT} from 'react-native-dotenv';
-import {useragent} from './device';
+import {getUserAgent} from 'react-native-device-info';
 
 export const get = async (path: string): Promise<Response> => {
+  const useragent = await getUserAgent();
   const response = await fetch(`${API_ENDPOINT}${path}`, {
     headers: {
       'User-Agent': useragent,
